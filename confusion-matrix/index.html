@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confusion Matrix Metrics Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Confusion Matrix Metrics Visualizer</h1>
+        
+        <div class="visualization-container">
+            <div class="metrics-display">
+                <div class="f1-score-container">
+                    <h2>F1 Score: <span id="f1-score">0.00</span></h2>
+                    <div class="f1-meter">
+                        <div id="f1-meter-fill"></div>
+                    </div>
+                </div>
+                
+                <div class="confusion-matrix">
+                    <div class="matrix-row">
+                        <div class="matrix-cell header"></div>
+                        <div class="matrix-cell header">Predicted Positive</div>
+                        <div class="matrix-cell header">Predicted Negative</div>
+                    </div>
+                    <div class="matrix-row">
+                        <div class="matrix-cell header">Actual Positive</div>
+                        <div class="matrix-cell" id="tp-cell">TP: <span id="tp-value">0</span></div>
+                        <div class="matrix-cell" id="fn-cell">FN: <span id="fn-value">0</span></div>
+                    </div>
+                    <div class="matrix-row">
+                        <div class="matrix-cell header">Actual Negative</div>
+                        <div class="matrix-cell" id="fp-cell">FP: <span id="fp-value">0</span></div>
+                        <div class="matrix-cell" id="tn-cell">TN: <span id="tn-value">0</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls-container">
+                <div class="control-layer">
+                    <h3>Layer 1: Confusion Matrix Elements</h3>
+                    <div class="control-group">
+                        <label for="tp-slider">True Positive (TP):</label>
+                        <input type="range" id="tp-slider" min="0" max="100" value="50" class="slider">
+                        <span id="tp-display">50</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="fp-slider">False Positive (FP):</label>
+                        <input type="range" id="fp-slider" min="0" max="100" value="50" class="slider">
+                        <span id="fp-display">50</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="tn-slider">True Negative (TN):</label>
+                        <input type="range" id="tn-slider" min="0" max="100" value="50" class="slider">
+                        <span id="tn-display">50</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="fn-slider">False Negative (FN):</label>
+                        <input type="range" id="fn-slider" min="0" max="100" value="50" class="slider">
+                        <span id="fn-display">50</span>
+                    </div>
+                </div>
+                
+                <div class="control-layer">
+                    <h3>Layer 2: Derived Metrics</h3>
+                    <div class="control-group">
+                        <label for="precision-slider">Precision:</label>
+                        <input type="range" id="precision-slider" min="0" max="100" value="50" class="slider">
+                        <span id="precision-display">0.50</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="recall-slider">Recall:</label>
+                        <input type="range" id="recall-slider" min="0" max="100" value="50" class="slider">
+                        <span id="recall-display">0.50</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h3>Formulas:</h3>
+            <ul>
+                <li>Precision = TP / (TP + FP)</li>
+                <li>Recall = TP / (TP + FN)</li>
+                <li>F1 Score = 2 * (Precision * Recall) / (Precision + Recall)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

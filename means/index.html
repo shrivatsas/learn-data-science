@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistical Means Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Statistical Means Visualizer</h1>
+        
+        <div class="visualization-container">
+            <div class="inputs-display">
+                <h2>Input Values</h2>
+                <div class="input-meters">
+                    <div class="input-item">
+                        <h3>Value A: <span id="value-a">0.50</span></h3>
+                        <div class="meter">
+                            <div id="value-a-meter-fill" class="meter-fill"></div>
+                        </div>
+                    </div>
+                    <div class="input-item">
+                        <h3>Value B: <span id="value-b">0.50</span></h3>
+                        <div class="meter">
+                            <div id="value-b-meter-fill" class="meter-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="means-display">
+                <h2>Different Means of Values</h2>
+                
+                <div class="mean-item">
+                    <h3>Arithmetic Mean: <span id="arithmetic-mean">0.50</span></h3>
+                    <p class="formula">AM = (A + B) / 2</p>
+                    <div class="meter">
+                        <div id="arithmetic-meter-fill" class="meter-fill"></div>
+                    </div>
+                </div>
+                
+                <div class="mean-item">
+                    <h3>Geometric Mean: <span id="geometric-mean">0.50</span></h3>
+                    <p class="formula">GM = √(A × B)</p>
+                    <div class="meter">
+                        <div id="geometric-meter-fill" class="meter-fill"></div>
+                    </div>
+                </div>
+                
+                <div class="mean-item">
+                    <h3>Harmonic Mean: <span id="harmonic-mean">0.50</span></h3>
+                    <p class="formula">HM = 2 × (A × B) / (A + B)</p>
+                    <div class="meter">
+                        <div id="harmonic-meter-fill" class="meter-fill"></div>
+                    </div>
+                </div>
+                
+                <div class="mean-item">
+                    <h3>Quadratic Mean (RMS): <span id="quadratic-mean">0.50</span></h3>
+                    <p class="formula">QM = √[(A² + B²) / 2]</p>
+                    <div class="meter">
+                        <div id="quadratic-meter-fill" class="meter-fill"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls-container">
+                <div class="control-layer">
+                    <h3>Input Controls</h3>
+                    <div class="control-group">
+                        <label for="value-a-slider">Value A:</label>
+                        <input type="range" id="value-a-slider" min="0" max="100" value="50" class="slider">
+                        <span id="value-a-display">0.50</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="value-b-slider">Value B:</label>
+                        <input type="range" id="value-b-slider" min="0" max="100" value="50" class="slider">
+                        <span id="value-b-display">0.50</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h3>About Statistical Means:</h3>
+            <ul>
+                <li><strong>Arithmetic Mean (AM):</strong> Simple average of values. Gives equal weight to each value.</li>
+                <li><strong>Geometric Mean (GM):</strong> Represents the central tendency of a set of numbers by using their product. Useful when values have different ranges.</li>
+                <li><strong>Harmonic Mean (HM):</strong> Reciprocal of the arithmetic mean of the reciprocals. Used when dealing with rates or ratios.</li>
+                <li><strong>Quadratic Mean (QM):</strong> Also known as Root Mean Square (RMS). Emphasizes larger values more than smaller ones.</li>
+            </ul>
+            <h3>Relationships:</h3>
+            <p>For any two positive numbers: HM ≤ GM ≤ AM ≤ QM</p>
+            <p>This means: Harmonic Mean ≤ Geometric Mean ≤ Arithmetic Mean ≤ Quadratic Mean</p>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
