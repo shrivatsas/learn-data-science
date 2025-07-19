@@ -476,14 +476,8 @@ function createRangeBars() {
         });
     });
     
-    // Sort by category and then by range size
-    allTypes.sort((a, b) => {
-        if (a.category !== b.category) {
-            const categoryOrder = { floating: 0, integer: 1, specialized: 2 };
-            return categoryOrder[a.category] - categoryOrder[b.category];
-        }
-        return b.numericRange - a.numericRange; // Largest first within category
-    });
+    // Sort by range size (largest to smallest)
+    allTypes.sort((a, b) => b.numericRange - a.numericRange);
     
     // Find max range for scaling
     const maxRange = Math.max(...allTypes.map(t => t.numericRange));
@@ -545,20 +539,37 @@ function createRangeBarItem(type, maxRange) {
     const fill = document.createElement('div');
     fill.className = `range-bar-fill ${type.category}`;
     
-    // Calculate width percentage (logarithmic scale for better visualization)
-    const logRange = Math.log10(type.numericRange + 1);
-    const logMaxRange = Math.log10(maxRange + 1);
+    // Calculate width percentage using logarithmic scale for better visualization
+    const logRange = Math.log10(Math.max(type.numericRange, 1));
+    const logMaxRange = Math.log10(Math.max(maxRange, 1));
     const widthPercent = (logRange / logMaxRange) * 100;
     
-    fill.style.width = `${widthPercent}%`;
+    fill.style.width = `${Math.max(widthPercent, 5)}%`; // Minimum 5% for visibility
     fill.textContent = `${type.bits} bits`;
     
     visual.appendChild(fill);
     
-    // Value display
+    // Value display with exponential notation
     const value = document.createElement('div');
     value.className = 'range-bar-value';
-    value.textContent = type.range;
+    
+    // Calculate order of magnitude
+    const magnitude = Math.floor(Math.log10(Math.max(type.numericRange, 1)));
+    let exponentialDisplay = '';
+    
+    if (type.numericRange >= 1e6) {
+        exponentialDisplay = `≈ 10^${magnitude}`;
+    } else if (type.numericRange >= 1000) {
+        exponentialDisplay = `≈ ${(type.numericRange / 1000).toFixed(1)}K`;
+    } else {
+        exponentialDisplay = `${type.numericRange}`;
+    }
+    
+    value.innerHTML = `
+        ${type.range}<br>
+        <small>${exponentialDisplay}</small><br>
+        <small style="color: #999; font-size: 0.75rem;">log₁₀: ${magnitude}</small>
+    `;
     
     item.appendChild(label);
     item.appendChild(visual);
