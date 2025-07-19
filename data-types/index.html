@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU & GPU Data Types Explorer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>CPU & GPU Data Types Explorer</h1>
+        <p class="subtitle">Explore precision, range, and memory usage of different data types</p>
+        
+        <div class="main-content">
+            <!-- Data Type Categories -->
+            <div class="category-selector">
+                <h3>Data Type Categories</h3>
+                <div class="category-buttons">
+                    <button id="floating-btn" class="category-btn active">Floating Point</button>
+                    <button id="integer-btn" class="category-btn">Integer</button>
+                    <button id="specialized-btn" class="category-btn">Specialized</button>
+                </div>
+            </div>
+
+            <!-- Data Type Grid -->
+            <div class="data-types-grid" id="data-types-grid">
+                <!-- Will be populated by JavaScript -->
+            </div>
+
+            <!-- Data Types Comparison Table -->
+            <div class="comparison-section">
+                <h3>Data Types Comparison</h3>
+                <div class="comparison-table-container" id="comparison-table-container">
+                    <!-- Comparison table will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Precision Visualizer -->
+            <div class="precision-section">
+                <h3>Precision Visualizer</h3>
+                <div class="precision-controls">
+                    <div class="control-group">
+                        <label for="test-value">Test Value:</label>
+                        <input type="number" id="test-value" value="3.14159" step="any">
+                        <button id="test-precision-btn">Test Across All Types</button>
+                    </div>
+                </div>
+                
+                <div class="precision-results-grid" id="precision-results-grid">
+                    <!-- Precision results for all data types will be shown here -->
+                </div>
+            </div>
+
+            <!-- Range Visualizer -->
+            <div class="range-section">
+                <h3>Range Visualizer</h3>
+                <p class="range-description">Compare the numerical ranges of all data types. Longer bars represent larger ranges.</p>
+                
+                <div class="range-bars-container" id="range-bars-container">
+                    <!-- Range bars will be populated by JavaScript -->
+                </div>
+                
+                <div class="range-legend">
+                    <div class="legend-item">
+                        <div class="legend-color floating"></div>
+                        <span>Floating Point</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color integer"></div>
+                        <span>Integer</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color specialized"></div>
+                        <span>Specialized</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Usage Calculator -->
+            <div class="memory-section">
+                <h3>Memory Usage Calculator</h3>
+                <div class="memory-controls">
+                    <div class="control-group">
+                        <label for="array-size">Array Size:</label>
+                        <input type="number" id="array-size" value="1000000" min="1">
+                        <span class="unit">elements</span>
+                        <button id="calculate-memory-btn">Calculate for All Types</button>
+                    </div>
+                </div>
+                
+                <div class="memory-results-grid" id="memory-results-grid">
+                    <!-- Memory calculation results for all data types -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>
