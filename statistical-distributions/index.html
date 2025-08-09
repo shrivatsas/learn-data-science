@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistical Distributions Explorer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Statistical Distributions Explorer</h1>
+            <p>Interactive visualization of common probability distributions with customizable parameters</p>
+        </header>
+
+        <div class="controls-section">
+            <h2>Distribution Parameters</h2>
+            
+            <!-- Normal Distribution Parameters -->
+            <div class="distribution-card" data-distribution="normal">
+                <h3>Normal Distribution</h3>
+                <div class="param-control">
+                    <label for="normalMean">Mean (μ):</label>
+                    <input type="range" id="normalMean" min="-5" max="5" step="0.1" value="0">
+                    <input type="number" id="normalMeanValue" min="-5" max="5" step="0.1" value="0">
+                </div>
+                <div class="param-control">
+                    <label for="normalStd">Standard Deviation (σ):</label>
+                    <input type="range" id="normalStd" min="0.1" max="3" step="0.1" value="1">
+                    <input type="number" id="normalStdValue" min="0.1" max="3" step="0.1" value="1">
+                </div>
+            </div>
+
+            <!-- Uniform Distribution Parameters -->
+            <div class="distribution-card" data-distribution="uniform">
+                <h3>Uniform Distribution</h3>
+                <div class="param-control">
+                    <label for="uniformMin">Minimum (a):</label>
+                    <input type="range" id="uniformMin" min="-5" max="5" step="0.1" value="0">
+                    <input type="number" id="uniformMinValue" min="-5" max="5" step="0.1" value="0">
+                </div>
+                <div class="param-control">
+                    <label for="uniformMax">Maximum (b):</label>
+                    <input type="range" id="uniformMax" min="-5" max="10" step="0.1" value="1">
+                    <input type="number" id="uniformMaxValue" min="-5" max="10" step="0.1" value="1">
+                </div>
+            </div>
+
+            <!-- Exponential Distribution Parameters -->
+            <div class="distribution-card" data-distribution="exponential">
+                <h3>Exponential Distribution</h3>
+                <div class="param-control">
+                    <label for="exponentialRate">Rate (λ):</label>
+                    <input type="range" id="exponentialRate" min="0.1" max="5" step="0.1" value="1">
+                    <input type="number" id="exponentialRateValue" min="0.1" max="5" step="0.1" value="1">
+                </div>
+            </div>
+
+            <!-- Beta Distribution Parameters -->
+            <div class="distribution-card" data-distribution="beta">
+                <h3>Beta Distribution</h3>
+                <div class="param-control">
+                    <label for="betaAlpha">Alpha (α):</label>
+                    <input type="range" id="betaAlpha" min="0.1" max="5" step="0.1" value="2">
+                    <input type="number" id="betaAlphaValue" min="0.1" max="5" step="0.1" value="2">
+                </div>
+                <div class="param-control">
+                    <label for="betaBeta">Beta (β):</label>
+                    <input type="range" id="betaBeta" min="0.1" max="5" step="0.1" value="2">
+                    <input type="number" id="betaBetaValue" min="0.1" max="5" step="0.1" value="2">
+                </div>
+            </div>
+        </div>
+
+        <div class="distributions-grid">
+            <!-- Normal Distribution -->
+            <div class="distribution-container">
+                <div class="chart-header">
+                    <h3>Normal Distribution</h3>
+                    <div class="stats-summary" id="normalStats">
+                        <span>μ=0.00, σ=1.00</span>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="normalChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Uniform Distribution -->
+            <div class="distribution-container">
+                <div class="chart-header">
+                    <h3>Uniform Distribution</h3>
+                    <div class="stats-summary" id="uniformStats">
+                        <span>a=0.00, b=1.00</span>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="uniformChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Exponential Distribution -->
+            <div class="distribution-container">
+                <div class="chart-header">
+                    <h3>Exponential Distribution</h3>
+                    <div class="stats-summary" id="exponentialStats">
+                        <span>λ=1.00</span>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="exponentialChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Beta Distribution -->
+            <div class="distribution-container">
+                <div class="chart-header">
+                    <h3>Beta Distribution</h3>
+                    <div class="stats-summary" id="betaStats">
+                        <span>α=2.00, β=2.00</span>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="betaChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Binomial Distribution -->
+            <div class="distribution-container">
+                <div class="chart-header">
+                    <h3>Binomial Distribution</h3>
+                    <div class="stats-summary" id="binomialStats">
+                        <span>n=10, p=0.50</span>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="binomialChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Poisson Distribution -->
+            <div class="distribution-container">
+                <div class="chart-header">
+                    <h3>Poisson Distribution</h3>
+                    <div class="stats-summary" id="poissonStats">
+                        <span>λ=3.00</span>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="poissonChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Gamma Distribution -->
+            <div class="distribution-container">
+                <div class="chart-header">
+                    <h3>Gamma Distribution</h3>
+                    <div class="stats-summary" id="gammaStats">
+                        <span>k=2.00, θ=1.00</span>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="gammaChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Parameters for other distributions -->
+        <div class="additional-controls">
+            <div class="distribution-card" data-distribution="binomial">
+                <h3>Binomial Parameters</h3>
+                <div class="param-control">
+                    <label for="binomialN">Number of Trials (n):</label>
+                    <input type="range" id="binomialN" min="1" max="50" step="1" value="10">
+                    <input type="number" id="binomialNValue" min="1" max="50" step="1" value="10">
+                </div>
+                <div class="param-control">
+                    <label for="binomialP">Probability (p):</label>
+                    <input type="range" id="binomialP" min="0.01" max="0.99" step="0.01" value="0.5">
+                    <input type="number" id="binomialPValue" min="0.01" max="0.99" step="0.01" value="0.5">
+                </div>
+            </div>
+
+            <div class="distribution-card" data-distribution="poisson">
+                <h3>Poisson Parameters</h3>
+                <div class="param-control">
+                    <label for="poissonLambda">Rate (λ):</label>
+                    <input type="range" id="poissonLambda" min="0.5" max="10" step="0.1" value="3">
+                    <input type="number" id="poissonLambdaValue" min="0.5" max="10" step="0.1" value="3">
+                </div>
+            </div>
+
+            <div class="distribution-card" data-distribution="gamma">
+                <h3>Gamma Parameters</h3>
+                <div class="param-control">
+                    <label for="gammaShape">Shape (k):</label>
+                    <input type="range" id="gammaShape" min="0.1" max="5" step="0.1" value="2">
+                    <input type="number" id="gammaShapeValue" min="0.1" max="5" step="0.1" value="2">
+                </div>
+                <div class="param-control">
+                    <label for="gammaScale">Scale (θ):</label>
+                    <input type="range" id="gammaScale" min="0.1" max="3" step="0.1" value="1">
+                    <input type="number" id="gammaScaleValue" min="0.1" max="3" step="0.1" value="1">
+                </div>
+            </div>
+        </div>
+
+        <div class="information-section">
+            <div class="distribution-info">
+                <h3>Distribution Comparison Guide</h3>
+                <div class="comparison-grid">
+                    <div class="info-card">
+                        <h4>Normal Distribution</h4>
+                        <p><strong>Shape:</strong> Bell curve, symmetric</p>
+                        <p><strong>Use:</strong> Natural phenomena, errors</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Uniform Distribution</h4>
+                        <p><strong>Shape:</strong> Flat, rectangular</p>
+                        <p><strong>Use:</strong> Equal probability scenarios</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Exponential Distribution</h4>
+                        <p><strong>Shape:</strong> Decreasing exponential</p>
+                        <p><strong>Use:</strong> Waiting times, reliability</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Beta Distribution</h4>
+                        <p><strong>Shape:</strong> Flexible on [0,1]</p>
+                        <p><strong>Use:</strong> Proportions, Bayesian</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Binomial Distribution</h4>
+                        <p><strong>Shape:</strong> Discrete, bell-like</p>
+                        <p><strong>Use:</strong> Success counts</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Poisson Distribution</h4>
+                        <p><strong>Shape:</strong> Discrete, skewed</p>
+                        <p><strong>Use:</strong> Rare events, arrivals</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Gamma Distribution</h4>
+                        <p><strong>Shape:</strong> Flexible, positive</p>
+                        <p><strong>Use:</strong> Waiting times, rainfall</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

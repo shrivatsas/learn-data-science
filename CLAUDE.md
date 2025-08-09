@@ -14,6 +14,7 @@ The repository follows a modular structure where each concept is implemented as 
 - `confusion-matrix/` - Classification metrics visualization (Precision, Recall, F1 Score)
 - `means/` - Statistical means comparison (Arithmetic, Geometric, Harmonic, Quadratic)
 - `data-types/` - CPU/GPU data types explorer (float16, bfloat16, int8, etc.)
+- `statistical-distributions/` - Interactive comparison of probability distributions (Normal, Uniform, Exponential, Beta, Binomial, Poisson, Gamma)
 - `Measures.md` - Detailed explanation of F1 score intuition
 
 Each directory contains:
@@ -77,6 +78,14 @@ chart.update('none'); // Fast update without animation
 - Real-time updates without performance bottlenecks
 - Parameter validation and range enforcement
 
+### Multi-Visualization Design Pattern
+When creating tools that compare related concepts (like different statistical distributions, activation functions, or data types):
+- Display all variations simultaneously in a grid layout rather than using dropdown selectors
+- Enable real-time parameter changes that update all visualizations at once
+- Use consistent color coding to distinguish between different concepts
+- Provide comparative context through side-by-side visualization
+- This approach maximizes educational value by allowing immediate pattern recognition and difference identification
+
 ## Design Standards and Visual Consistency
 
 ### CSS Design Principles
@@ -122,3 +131,4 @@ This repository prioritizes:
 - **Mathematical Accuracy**: Correct implementations that can be trusted for learning
 - **Accessibility**: Clear explanations suitable for beginners to intermediate learners
 - **Visual Consistency**: Uniform design language across all tools for professional appearance
+- **Comparative Learning**: Show multiple related concepts simultaneously when possible to enable visual comparison and pattern recognition
