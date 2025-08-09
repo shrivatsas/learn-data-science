@@ -50,6 +50,15 @@ python3 -m http.server 8000
 - Real-time computation updates
 - Responsive design with CSS Grid/Flexbox
 
+## Design Principles
+
+### Single-View Visualization
+- **Always represent all visuals in a single view/page** for easy comparison
+- Avoid dropdowns or tabs that hide visualizations
+- Use responsive grid layouts to display multiple related concepts simultaneously
+- Enable users to compare behaviors, parameters, and outputs side-by-side
+- Example: Show all stochastic processes (Random Walk, Brownian Motion, Markov Chain, etc.) at once
+
 ## Educational Focus
 - Visual/interactive over theoretical
 - Mathematical accuracy

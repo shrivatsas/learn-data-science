@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stochastic Processes - Interactive Visualizations</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Stochastic Processes</h1>
+        
+        <div class="global-controls">
+            <div class="control-group">
+                <label for="global-steps">Global Steps:</label>
+                <input type="range" id="global-steps" class="slider" min="50" max="1000" value="500">
+                <span id="global-steps-value">500</span>
+            </div>
+            <div class="control-group">
+                <label for="global-paths">Global Paths:</label>
+                <input type="range" id="global-paths" class="slider" min="1" max="5" value="3">
+                <span id="global-paths-value">3</span>
+            </div>
+            <button id="global-generate-btn" class="generate-button">Generate All Processes</button>
+            <button id="global-animate-btn" class="animate-button">Animate All</button>
+        </div>
+
+        <div class="processes-grid">
+            <!-- Random Walk -->
+            <div class="process-container">
+                <div class="process-header">
+                    <h3>Random Walk</h3>
+                </div>
+                <div class="chart-section">
+                    <canvas id="random-walk-chart"></canvas>
+                </div>
+                <div class="process-controls">
+                    <div class="control-group">
+                        <label for="prob-up">Prob. Up:</label>
+                        <input type="range" id="prob-up" class="slider" min="0" max="1" step="0.01" value="0.5">
+                        <span id="prob-up-value">0.5</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brownian Motion -->
+            <div class="process-container">
+                <div class="process-header">
+                    <h3>Brownian Motion</h3>
+                </div>
+                <div class="chart-section">
+                    <canvas id="brownian-motion-chart"></canvas>
+                </div>
+                <div class="process-controls">
+                    <div class="control-group">
+                        <label for="drift">Drift:</label>
+                        <input type="range" id="drift" class="slider" min="-0.1" max="0.1" step="0.01" value="0">
+                        <span id="drift-value">0</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="volatility">Volatility:</label>
+                        <input type="range" id="volatility" class="slider" min="0.1" max="2" step="0.1" value="1">
+                        <span id="volatility-value">1</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Markov Chain -->
+            <div class="process-container">
+                <div class="process-header">
+                    <h3>Markov Chain</h3>
+                </div>
+                <div class="chart-section">
+                    <canvas id="markov-chain-chart"></canvas>
+                </div>
+                <div class="process-controls">
+                    <div class="state-display">
+                        <div class="state-grid" id="state-grid"></div>
+                        <div class="transition-matrix" id="transition-matrix"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Poisson Process -->
+            <div class="process-container">
+                <div class="process-header">
+                    <h3>Poisson Process</h3>
+                </div>
+                <div class="chart-section">
+                    <canvas id="poisson-process-chart"></canvas>
+                </div>
+                <div class="process-controls">
+                    <div class="control-group">
+                        <label for="rate">Rate (λ):</label>
+                        <input type="range" id="rate" class="slider" min="0.1" max="5" step="0.1" value="1">
+                        <span id="rate-value">1</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Levy Process -->
+            <div class="process-container">
+                <div class="process-header">
+                    <h3>Lévy Process</h3>
+                </div>
+                <div class="chart-section">
+                    <canvas id="levy-process-chart"></canvas>
+                </div>
+                <div class="process-controls">
+                    <div class="control-group">
+                        <label for="alpha">Alpha (α):</label>
+                        <input type="range" id="alpha" class="slider" min="0.5" max="2" step="0.1" value="1.5">
+                        <span id="alpha-value">1.5</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="beta">Beta (β):</label>
+                        <input type="range" id="beta" class="slider" min="-1" max="1" step="0.1" value="0">
+                        <span id="beta-value">0</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="scale">Scale (σ):</label>
+                        <input type="range" id="scale" class="slider" min="0.1" max="2" step="0.1" value="1">
+                        <span id="scale-value">1</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gaussian Process -->
+            <div class="process-container">
+                <div class="process-header">
+                    <h3>Gaussian Process</h3>
+                </div>
+                <div class="chart-section">
+                    <canvas id="gaussian-process-chart"></canvas>
+                </div>
+                <div class="process-controls">
+                    <div class="control-group">
+                        <label for="length-scale">Length Scale:</label>
+                        <input type="range" id="length-scale" class="slider" min="5" max="50" step="5" value="20">
+                        <span id="length-scale-value">20</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="variance">Variance:</label>
+                        <input type="range" id="variance" class="slider" min="0.1" max="3" step="0.1" value="1">
+                        <span id="variance-value">1</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="noise">Noise:</label>
+                        <input type="range" id="noise" class="slider" min="0" max="0.5" step="0.05" value="0.1">
+                        <span id="noise-value">0.1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>About Stochastic Processes</h2>
+            <div id="process-info">
+                <p>A stochastic process is a collection of random variables indexed by time. Explore different processes above to understand their unique properties:</p>
+                <ul>
+                    <li><strong>Random Walk:</strong> Sum of independent random steps</li>
+                    <li><strong>Brownian Motion:</strong> Continuous-time limit of random walk</li>
+                    <li><strong>Markov Chain:</strong> Memory-less discrete state process</li>
+                    <li><strong>Poisson Process:</strong> Counting process for rare events</li>
+                    <li><strong>Lévy Process:</strong> Heavy-tailed jumps with stable distributions</li>
+                    <li><strong>Gaussian Process:</strong> Smooth functions with specified covariance</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
