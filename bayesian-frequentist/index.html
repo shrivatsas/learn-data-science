@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayesian vs Frequentist Probability - Interactive Learning</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Bayesian vs Frequentist Probability</h1>
+            <p class="subtitle">Interactive exploration of two fundamental approaches to statistical inference</p>
+        </header>
+
+        <nav class="tab-navigation">
+            <button class="tab-btn active" data-tab="overview">Overview</button>
+            <button class="tab-btn" data-tab="coin-flip">Coin Flip Demo</button>
+            <button class="tab-btn" data-tab="medical-test">Medical Test</button>
+            <button class="tab-btn" data-tab="ab-testing">A/B Testing</button>
+            <button class="tab-btn" data-tab="comparison">Side-by-Side</button>
+        </nav>
+
+        <!-- Overview Tab -->
+        <div class="tab-content active" id="overview">
+            <div class="approach-cards">
+                <div class="approach-card frequentist">
+                    <h2>Frequentist Approach</h2>
+                    <div class="key-concepts">
+                        <h3>Key Concepts:</h3>
+                        <ul>
+                            <li><strong>Fixed Parameters:</strong> Parameters are fixed but unknown constants</li>
+                            <li><strong>Long-run Frequency:</strong> Probability is the limit of relative frequency</li>
+                            <li><strong>Confidence Intervals:</strong> 95% of intervals will contain the true parameter</li>
+                            <li><strong>P-values:</strong> Probability of observing data given null hypothesis</li>
+                        </ul>
+                    </div>
+                    <div class="philosophy">
+                        <h3>Philosophy:</h3>
+                        <p>"What would happen if we repeated this experiment many times?"</p>
+                    </div>
+                </div>
+
+                <div class="approach-card bayesian">
+                    <h2>Bayesian Approach</h2>
+                    <div class="key-concepts">
+                        <h3>Key Concepts:</h3>
+                        <ul>
+                            <li><strong>Prior Beliefs:</strong> Start with initial beliefs about parameters</li>
+                            <li><strong>Posterior Distribution:</strong> Update beliefs with observed data</li>
+                            <li><strong>Credible Intervals:</strong> 95% probability parameter lies in interval</li>
+                            <li><strong>Bayes' Theorem:</strong> P(θ|data) ∝ P(data|θ) × P(θ)</li>
+                        </ul>
+                    </div>
+                    <div class="philosophy">
+                        <h3>Philosophy:</h3>
+                        <p>"What do we believe about the parameter given this specific data?"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bayes-theorem">
+                <h2>Bayes' Theorem</h2>
+                <div class="theorem-formula">
+                    <div class="formula">
+                        P(θ|D) = <span class="fraction">
+                            <span class="numerator">P(D|θ) × P(θ)</span>
+                            <span class="denominator">P(D)</span>
+                        </span>
+                    </div>
+                    <div class="formula-explanation">
+                        <div class="term">
+                            <span class="term-symbol">P(θ|D)</span>
+                            <span class="term-name">Posterior</span>
+                            <span class="term-desc">What we believe after seeing data</span>
+                        </div>
+                        <div class="term">
+                            <span class="term-symbol">P(D|θ)</span>
+                            <span class="term-name">Likelihood</span>
+                            <span class="term-desc">How likely the data given parameter</span>
+                        </div>
+                        <div class="term">
+                            <span class="term-symbol">P(θ)</span>
+                            <span class="term-name">Prior</span>
+                            <span class="term-desc">What we believed before data</span>
+                        </div>
+                        <div class="term">
+                            <span class="term-symbol">P(D)</span>
+                            <span class="term-name">Evidence</span>
+                            <span class="term-desc">Total probability of data</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coin Flip Demo Tab -->
+        <div class="tab-content" id="coin-flip">
+            <h2>Coin Flip Experiment</h2>
+            <p>Explore how Bayesian and Frequentist approaches handle a simple coin flip scenario.</p>
+            
+            <div class="experiment-controls">
+                <div class="control-group">
+                    <label for="coin-flips">Number of Flips:</label>
+                    <input type="range" id="coin-flips" min="1" max="100" value="10">
+                    <span id="coin-flips-value">10</span>
+                </div>
+                
+                <div class="control-group">
+                    <label for="coin-heads">Heads Observed:</label>
+                    <input type="range" id="coin-heads" min="0" max="10" value="6">
+                    <span id="coin-heads-value">6</span>
+                </div>
+
+                <div class="control-group">
+                    <label for="prior-belief">Bayesian Prior (belief about fairness):</label>
+                    <select id="prior-belief">
+                        <option value="uniform">Uniform (no prior belief)</option>
+                        <option value="fair">Fair coin (β(50,50))</option>
+                        <option value="biased-heads">Biased toward heads (β(70,30))</option>
+                        <option value="biased-tails">Biased toward tails (β(30,70))</option>
+                    </select>
+                </div>
+
+                <button id="simulate-flips">Simulate Random Flips</button>
+            </div>
+
+            <div class="results-container">
+                <div class="result-card frequentist-result">
+                    <h3>Frequentist Analysis</h3>
+                    <div class="result-content">
+                        <div class="estimate">
+                            <span class="label">Point Estimate:</span>
+                            <span id="freq-estimate">0.60</span>
+                        </div>
+                        <div class="confidence-interval">
+                            <span class="label">95% Confidence Interval:</span>
+                            <span id="freq-ci">[0.31, 0.89]</span>
+                        </div>
+                        <div class="interpretation">
+                            <p id="freq-interpretation">If we repeated this experiment many times, 95% of confidence intervals would contain the true probability.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card bayesian-result">
+                    <h3>Bayesian Analysis</h3>
+                    <div class="result-content">
+                        <div class="estimate">
+                            <span class="label">Posterior Mean:</span>
+                            <span id="bayes-estimate">0.58</span>
+                        </div>
+                        <div class="credible-interval">
+                            <span class="label">95% Credible Interval:</span>
+                            <span id="bayes-ci">[0.35, 0.81]</span>
+                        </div>
+                        <div class="interpretation">
+                            <p id="bayes-interpretation">There's a 95% probability that the true coin bias lies in this interval.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visualization">
+                <canvas id="coin-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Medical Test Tab -->
+        <div class="tab-content" id="medical-test">
+            <h2>Medical Test Scenario</h2>
+            <p>A classic example showing the importance of prior probabilities in medical diagnosis.</p>
+
+            <div class="scenario-setup">
+                <div class="control-group">
+                    <label for="disease-prevalence">Disease Prevalence (%):</label>
+                    <input type="range" id="disease-prevalence" min="0.1" max="10" step="0.1" value="1">
+                    <span id="disease-prevalence-value">1.0%</span>
+                </div>
+
+                <div class="control-group">
+                    <label for="test-sensitivity">Test Sensitivity (%):</label>
+                    <input type="range" id="test-sensitivity" min="80" max="99.9" step="0.1" value="95">
+                    <span id="test-sensitivity-value">95.0%</span>
+                </div>
+
+                <div class="control-group">
+                    <label for="test-specificity">Test Specificity (%):</label>
+                    <input type="range" id="test-specificity" min="80" max="99.9" step="0.1" value="95">
+                    <span id="test-specificity-value">95.0%</span>
+                </div>
+            </div>
+
+            <div class="medical-results">
+                <div class="result-card">
+                    <h3>Test Result: POSITIVE</h3>
+                    <div class="medical-analysis">
+                        <div class="frequentist-medical">
+                            <h4>Frequentist Interpretation:</h4>
+                            <p>The test has a 5% false positive rate. We reject the null hypothesis (no disease) at α = 0.05.</p>
+                        </div>
+                        
+                        <div class="bayesian-medical">
+                            <h4>Bayesian Interpretation:</h4>
+                            <div class="posterior-probability">
+                                <span class="label">Probability of having disease:</span>
+                                <span id="disease-probability" class="probability-value">16.1%</span>
+                            </div>
+                            <p id="bayesian-medical-interpretation">Even with a positive test, the probability of actually having the disease is relatively low due to the low base rate.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visualization-container">
+                    <div class="tree-diagram">
+                        <h4>Probability Tree</h4>
+                        <div id="probability-tree"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A/B Testing Tab -->
+        <div class="tab-content" id="ab-testing">
+            <h2>A/B Testing Comparison</h2>
+            <p>Compare how Bayesian and Frequentist approaches handle A/B testing scenarios.</p>
+
+            <div class="ab-controls">
+                <div class="group-controls">
+                    <h3>Group A (Control)</h3>
+                    <div class="control-group">
+                        <label for="group-a-visitors">Visitors:</label>
+                        <input type="number" id="group-a-visitors" min="100" max="10000" value="1000">
+                    </div>
+                    <div class="control-group">
+                        <label for="group-a-conversions">Conversions:</label>
+                        <input type="number" id="group-a-conversions" min="0" value="50">
+                    </div>
+                </div>
+
+                <div class="group-controls">
+                    <h3>Group B (Treatment)</h3>
+                    <div class="control-group">
+                        <label for="group-b-visitors">Visitors:</label>
+                        <input type="number" id="group-b-visitors" min="100" max="10000" value="1000">
+                    </div>
+                    <div class="control-group">
+                        <label for="group-b-conversions">Conversions:</label>
+                        <input type="number" id="group-b-conversions" min="0" value="65">
+                    </div>
+                </div>
+
+                <button id="calculate-ab">Calculate Results</button>
+            </div>
+
+            <div class="ab-results">
+                <div class="result-card frequentist-ab">
+                    <h3>Frequentist Analysis</h3>
+                    <div class="ab-content">
+                        <div class="conversion-rates">
+                            <div>Group A: <span id="freq-rate-a">5.0%</span></div>
+                            <div>Group B: <span id="freq-rate-b">6.5%</span></div>
+                        </div>
+                        <div class="statistical-test">
+                            <div>Z-score: <span id="z-score">1.85</span></div>
+                            <div>P-value: <span id="p-value">0.064</span></div>
+                            <div class="conclusion" id="freq-conclusion">Not statistically significant at α = 0.05</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card bayesian-ab">
+                    <h3>Bayesian Analysis</h3>
+                    <div class="ab-content">
+                        <div class="posterior-stats">
+                            <div>P(B > A): <span id="prob-b-better">84.2%</span></div>
+                            <div>Expected lift: <span id="expected-lift">+1.3%</span></div>
+                            <div>95% Credible Interval for lift: <span id="lift-ci">[-0.2%, +2.8%]</span></div>
+                        </div>
+                        <div class="bayesian-conclusion" id="bayes-ab-conclusion">
+                            There's an 84% probability that B is better than A.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ab-visualization">
+                <canvas id="ab-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Comparison Tab -->
+        <div class="tab-content" id="comparison">
+            <h2>Side-by-Side Comparison</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Frequentist</th>
+                            <th>Bayesian</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Parameters</strong></td>
+                            <td>Fixed but unknown constants</td>
+                            <td>Random variables with distributions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Probability</strong></td>
+                            <td>Long-run frequency of events</td>
+                            <td>Degree of belief or uncertainty</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Prior Information</strong></td>
+                            <td>Not formally incorporated</td>
+                            <td>Explicitly incorporated via priors</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Inference</strong></td>
+                            <td>Based on sampling distributions</td>
+                            <td>Based on posterior distributions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Confidence/Credible Intervals</strong></td>
+                            <td>95% of intervals contain true parameter</td>
+                            <td>95% probability parameter is in interval</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hypothesis Testing</strong></td>
+                            <td>P-values and significance tests</td>
+                            <td>Bayes factors and posterior probabilities</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Computational Complexity</strong></td>
+                            <td>Often simpler calculations</td>
+                            <td>May require complex integration/MCMC</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Interpretation</strong></td>
+                            <td>What would happen in repeated sampling</td>
+                            <td>What we believe given this specific data</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="when-to-use">
+                <div class="use-case-card">
+                    <h3>When to Use Frequentist</h3>
+                    <ul>
+                        <li>Large sample sizes available</li>
+                        <li>Objective analysis required</li>
+                        <li>Regulatory/standard procedures</li>
+                        <li>Simple, well-established methods needed</li>
+                        <li>Avoiding subjective priors</li>
+                    </ul>
+                </div>
+
+                <div class="use-case-card">
+                    <h3>When to Use Bayesian</h3>
+                    <ul>
+                        <li>Small sample sizes</li>
+                        <li>Prior knowledge available</li>
+                        <li>Sequential decision making</li>
+                        <li>Uncertainty quantification important</li>
+                        <li>Complex hierarchical models</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
