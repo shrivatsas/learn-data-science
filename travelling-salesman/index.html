@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travelling Salesman Problem Playground</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Travelling Salesman Problem Playground</h1>
+            <p class="subtitle">
+                Explore classic strategies for solving the Travelling Salesman Problem (TSP) with an interactive map,
+                algorithm controls, and side-by-side insights into heuristic and exact approaches.
+            </p>
+        </header>
+
+        <div class="layout">
+            <section class="visual-panel">
+                <canvas id="map-canvas" width="640" height="420" aria-label="TSP tour visualization"></canvas>
+                <div class="results-summary">
+                    <div class="result-metric">
+                        <h3>Active Algorithm</h3>
+                        <p id="active-algorithm">—</p>
+                    </div>
+                    <div class="result-metric">
+                        <h3>Tour Length</h3>
+                        <p id="tour-length">—</p>
+                    </div>
+                    <div class="result-metric">
+                        <h3>Runtime</h3>
+                        <p id="runtime">—</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="control-panel">
+                <div class="card">
+                    <h2>Dataset</h2>
+                    <label for="dataset-select">Choose a city layout:</label>
+                    <select id="dataset-select"></select>
+
+                    <label for="start-city">Start city:</label>
+                    <select id="start-city"></select>
+
+                    <button id="shuffle-layout" class="secondary-button">Shuffle Layout</button>
+                </div>
+
+                <div class="card parameter-card">
+                    <h2>Algorithm Parameters</h2>
+                    <div class="parameter-group" data-for="nearest">
+                        <h3>Nearest Neighbor</h3>
+                        <p class="parameter-note">Greedy construction seeded by the chosen start city.</p>
+                    </div>
+
+                    <div class="parameter-group" data-for="genetic">
+                        <h3>Genetic Algorithm</h3>
+                        <label for="population-size">Population size</label>
+                        <input type="number" id="population-size" value="60" min="10" max="300" step="10">
+
+                        <label for="generations">Generations</label>
+                        <input type="number" id="generations" value="200" min="20" max="1000" step="10">
+
+                        <label for="mutation-rate">Mutation rate (%)</label>
+                        <input type="number" id="mutation-rate" value="12" min="1" max="60" step="1">
+                    </div>
+
+                    <div class="parameter-group" data-for="simulated">
+                        <h3>Simulated Annealing</h3>
+                        <label for="start-temperature">Start temperature</label>
+                        <input type="number" id="start-temperature" value="120" min="10" max="500" step="5">
+
+                        <label for="cooling-rate">Cooling rate</label>
+                        <input type="number" id="cooling-rate" value="0.92" min="0.80" max="0.99" step="0.01">
+
+                        <label for="iterations-per-temp">Iterations per temperature</label>
+                        <input type="number" id="iterations-per-temp" value="150" min="10" max="1000" step="10">
+                    </div>
+
+                    <div class="parameter-group" data-for="concorde">
+                        <h3>Concorde Branch &amp; Bound</h3>
+                        <p class="parameter-note">
+                            Uses an exact dynamic programming solver inspired by Concorde's branch-and-bound strategy.
+                            Best suited for the small instances provided here.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card algorithm-card">
+                    <h2>Run an Algorithm</h2>
+                    <button class="primary-button" data-action="nearest">Nearest Neighbor</button>
+                    <button class="primary-button" data-action="genetic">Genetic Algorithm</button>
+                    <button class="primary-button" data-action="simulated">Simulated Annealing</button>
+                    <button class="primary-button" data-action="concorde">Concorde (Branch &amp; Bound)</button>
+                    <button id="compare-all" class="accent-button">Compare All Methods</button>
+                </div>
+
+                <div class="card results-card">
+                    <h2>Tour Details</h2>
+                    <p id="tour-description">Run an algorithm to populate the tour summary.</p>
+                    <div class="route-list">
+                        <h3>Visit Order</h3>
+                        <ol id="route-order"></ol>
+                    </div>
+                    <div class="comparison-table">
+                        <h3>Latest Comparison</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Method</th>
+                                    <th>Distance</th>
+                                    <th>Runtime</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparison-body">
+                                <tr>
+                                    <td colspan="3">Click “Compare All Methods” to populate.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="explanation-card">
+            <h2>How Each Method Approaches TSP</h2>
+            <div class="algorithm-info-grid">
+                <article>
+                    <h3>Nearest Neighbor</h3>
+                    <p>
+                        A constructive heuristic that repeatedly extends the tour by moving to the closest
+                        unvisited city. Fast to compute, but prone to local traps.
+                    </p>
+                </article>
+                <article>
+                    <h3>Genetic Algorithm</h3>
+                    <p>
+                        Evolves a population of candidate tours through selection, crossover, and mutation.
+                        Balances exploration and exploitation to uncover high-quality routes.
+                    </p>
+                </article>
+                <article>
+                    <h3>Simulated Annealing</h3>
+                    <p>
+                        Starts from a random tour and progressively “cools” the system, occasionally accepting worse
+                        moves to escape local optima, mimicking the annealing process in metallurgy.
+                    </p>
+                </article>
+                <article>
+                    <h3>Concorde Branch &amp; Bound</h3>
+                    <p>
+                        An exact solver that prunes the search space using strong bounds. Here we use a
+                        dynamic-programming variant that guarantees optimal tours on our curated instances.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                Tip: Start with the greedy solution, then iterate with stochastic and exact methods to see how
+                solution quality and runtime trade off.
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

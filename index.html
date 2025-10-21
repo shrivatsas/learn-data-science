@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Data Science Learning Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 60px 40px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #718096;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-color-light));
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .module-card.data-types {
+            --accent-color: #4f46e5;
+            --accent-color-light: #818cf8;
+        }
+
+        .module-card.activation-functions {
+            --accent-color: #059669;
+            --accent-color-light: #34d399;
+        }
+
+        .module-card.bayesian-frequentist {
+            --accent-color: #dc2626;
+            --accent-color-light: #f87171;
+        }
+
+        .module-card.confusion-matrix {
+            --accent-color: #7c3aed;
+            --accent-color-light: #a78bfa;
+        }
+
+        .module-card.means {
+            --accent-color: #ea580c;
+            --accent-color-light: #fb923c;
+        }
+
+        .module-card.statistical-distributions {
+            --accent-color: #0891b2;
+            --accent-color-light: #22d3ee;
+        }
+
+        .module-card.stochastic-processes {
+            --accent-color: #be185d;
+            --accent-color-light: #f472b6;
+        }
+
+        .module-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-color-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .module-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .module-description {
+            color: #4a5568;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .module-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .module-features li {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .module-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .module-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-color-light));
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .module-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .module-link::after {
+            content: "→";
+            transition: transform 0.3s ease;
+        }
+
+        .module-link:hover::after {
+            transform: translateX(4px);
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+                gap: 20px;
+            }
+            
+            .module-card {
+                padding: 25px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        .coming-soon {
+            opacity: 0.7;
+            position: relative;
+        }
+
+        .coming-soon::after {
+            content: "Coming Soon";
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #fbbf24;
+            color: white;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .coming-soon .module-link {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Interactive Data Science Learning Hub</h1>
+            <p>Explore fundamental concepts through hands-on visualizations and interactive experiments. Master data science through engaging, practical learning experiences.</p>
+        </header>
+
+        <main class="modules-grid">
+            <!-- Data Types Module -->
+            <div class="module-card data-types">
+                <div class="module-icon">📊</div>
+                <h2 class="module-title">Data Types & Precision</h2>
+                <p class="module-description">
+                    Explore CPU and GPU data types including floating-point precision, integer ranges, and memory optimization. 
+                    Understand the critical differences between float16, bfloat16, and other numeric representations used in machine learning.
+                </p>
+                <ul class="module-features">
+                    <li>Interactive data type comparison tool</li>
+                    <li>Binary representation visualizer</li>
+                    <li>Memory usage calculator</li>
+                    <li>Precision loss analysis</li>
+                </ul>
+                <a href="data-types/" class="module-link">Explore Data Types</a>
+            </div>
+
+            <!-- Activation Functions Module -->
+            <div class="module-card activation-functions">
+                <div class="module-icon">⚡</div>
+                <h2 class="module-title">Neural Network Activation Functions</h2>
+                <p class="module-description">
+                    Interactive visualization of common activation functions used in neural networks. 
+                    Experiment with different parameters and understand how each function affects gradient flow and model performance.
+                </p>
+                <ul class="module-features">
+                    <li>Real-time function plotting</li>
+                    <li>Parameter adjustment sliders</li>
+                    <li>Gradient visualization</li>
+                    <li>Use case explanations</li>
+                </ul>
+                <a href="activation-functions/" class="module-link">Explore Activations</a>
+            </div>
+
+            <!-- Bayesian vs Frequentist Module -->
+            <div class="module-card bayesian-frequentist">
+                <div class="module-icon">🎯</div>
+                <h2 class="module-title">Bayesian vs Frequentist Statistics</h2>
+                <p class="module-description">
+                    Compare two fundamental approaches to statistical inference through interactive experiments. 
+                    Understand when to use each method with real-world examples like medical testing, A/B testing, and coin flips.
+                </p>
+                <ul class="module-features">
+                    <li>Coin flip probability experiments</li>
+                    <li>Medical diagnosis scenarios</li>
+                    <li>A/B testing comparisons</li>
+                    <li>Bayes' theorem visualization</li>
+                </ul>
+                <a href="bayesian-frequentist/" class="module-link">Explore Statistics</a>
+            </div>
+
+            <!-- Confusion Matrix Module -->
+            <div class="module-card confusion-matrix">
+                <div class="module-icon">🎪</div>
+                <h2 class="module-title">Confusion Matrix & Classification Metrics</h2>
+                <p class="module-description">
+                    Master classification evaluation through interactive confusion matrices. 
+                    Visualize precision, recall, F1-score, and other metrics while understanding their trade-offs in different scenarios.
+                </p>
+                <ul class="module-features">
+                    <li>Interactive confusion matrix builder</li>
+                    <li>Real-time metric calculations</li>
+                    <li>ROC curve visualization</li>
+                    <li>Multi-class classification support</li>
+                </ul>
+                <a href="confusion-matrix/" class="module-link">Explore Metrics</a>
+            </div>
+
+            <!-- Statistical Measures Module -->
+            <div class="module-card means">
+                <div class="module-icon">📈</div>
+                <h2 class="module-title">Statistical Measures & Central Tendency</h2>
+                <p class="module-description">
+                    Understand different types of averages and statistical measures through interactive visualizations. 
+                    Explore mean, median, mode, and their robustness to outliers with real-time data manipulation.
+                </p>
+                <ul class="module-features">
+                    <li>Interactive data point manipulation</li>
+                    <li>Outlier impact visualization</li>
+                    <li>Distribution shape analysis</li>
+                    <li>Robust statistics comparison</li>
+                </ul>
+                <a href="means/" class="module-link">Explore Measures</a>
+            </div>
+
+            <!-- Statistical Distributions Module -->
+            <div class="module-card statistical-distributions">
+                <div class="module-icon">📊</div>
+                <h2 class="module-title">Statistical Distributions</h2>
+                <p class="module-description">
+                    Interactive exploration of probability distributions commonly used in data science. 
+                    Adjust parameters and see how they affect distribution shape, moments, and real-world applications.
+                </p>
+                <ul class="module-features">
+                    <li>Parameter adjustment controls</li>
+                    <li>Real-time distribution plotting</li>
+                    <li>Moment calculations</li>
+                    <li>Sampling demonstrations</li>
+                </ul>
+                <a href="statistical-distributions/" class="module-link">Explore Distributions</a>
+            </div>
+
+            <!-- Stochastic Processes Module -->
+            <div class="module-card stochastic-processes">
+                <div class="module-icon">🌊</div>
+                <h2 class="module-title">Stochastic Processes</h2>
+                <p class="module-description">
+                    Dive into random processes and their applications in modeling time-series data. 
+                    Explore Markov chains, random walks, and other stochastic models through interactive simulations.
+                </p>
+                <ul class="module-features">
+                    <li>Process simulation controls</li>
+                    <li>Path visualization</li>
+                    <li>Parameter sensitivity analysis</li>
+                    <li>Real-world applications</li>
+                </ul>
+                <a href="stochastic-processes/" class="module-link">Explore Processes</a>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">7</span>
+                    <span class="stat-label">Interactive Modules</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">25+</span>
+                    <span class="stat-label">Visualizations</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">Learning Opportunities</span>
+                </div>
+            </div>
+            <p style="margin-top: 20px;">
+                Interactive Data Science Learning Hub - Hands-on exploration of fundamental concepts through visualization and experimentation.
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
